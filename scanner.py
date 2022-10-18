@@ -1,15 +1,25 @@
 import socket
-from threading import Thread
+import threading
 
-N = 2**16 - 1
+threads = []
 
-for port in range(1,100):
+def port(ip, port):
     sock = socket.socket()
     try:
-        print(port)
-        sock.connect(('127.0.0.1', port))
-        print("Порт", port, "открыт")
-    except:
-        continue
-    finally:
-        sock.close()
+        sock.connect((ip, port))
+        print(f"Порт {port} открыт\n")
+    except (ConnectionError, OSError):
+        pass
+    sock.close()
+
+ip_ = input("Выберите ip: ")
+port1 = 0
+print('Запуск сканирования!')
+while port1 < 65500:
+    if threading.active_count():
+        t = threading.Thread(target=port, args=(ip_, port1))
+        t.start()
+        threads.append(t)
+        port1 = port1 + 1
+
+print('Сканирование завершено!')
