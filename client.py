@@ -17,10 +17,10 @@ else:
 
 while True:
     msg = input('Введите сообщение: ')
-    if msg == 'exit':
-        break
     sock.send(msg.encode())
     data = sock.recv(1024)
-    print("Сообщение от сервера :",data.decode())
+    print("Сообщение от сервера :", data.decode())
+    if msg == 'exit':
+        break
 
 sock.close()
