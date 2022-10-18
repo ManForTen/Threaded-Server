@@ -11,7 +11,7 @@ sock = socket.socket()
 sock.setblocking(1)
 
 if m == 0:
-    sock.connect(('localhost', 9090))
+    sock.connect(('localhost', 9091))
 else:
     sock.connect((host,port_number))
 
@@ -19,8 +19,9 @@ while True:
     msg = input('Введите сообщение: ')
     sock.send(msg.encode())
     data = sock.recv(1024)
-    print("Сообщение от сервера :", data.decode())
     if msg == 'exit':
+        print('Клиент завершил свою работу!')
         break
+    print("Сообщение от сервера :", data.decode())
 
 sock.close()
