@@ -1,6 +1,8 @@
 import socket
 import threading
 
+f = open('log.txt', 'w')
+breaker = 0
 class ClientThreading(threading.Thread):
     def __init__(self, addr, conn):
         threading.Thread.__init__(self)
@@ -11,6 +13,7 @@ class ClientThreading(threading.Thread):
         print("----------------------------")
 
     def run(self):
+        f.write('Подключен:' + self.addr[0] + '\n')
         print (f"Подключение от {self.addr}")
         print("----------------------------")
         while True:
@@ -18,12 +21,18 @@ class ClientThreading(threading.Thread):
             msg = data.decode()
             if msg == 'exit':
                 break
+            f.write(msg + '\n')
             print (f"Сообщение от {self.addr}: {msg}")
             self.conn.send(msg.encode())
+            if msg == 'server off':
+                self.conn.close()
+                break
+        f.write('Отключение клиента!' + '\n')
         print (f"Клиент {self.addr} отключился!")
 
+
 ip = "localhost"
-port = 9091
+port = 9101
 TYPE = socket.AF_INET
 PROTOCOL = socket.SOCK_STREAM
 sock = socket.socket(TYPE,PROTOCOL)

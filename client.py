@@ -11,7 +11,7 @@ sock = socket.socket()
 sock.setblocking(1)
 
 if m == 0:
-    sock.connect(('localhost', 9091))
+    sock.connect(('localhost', 9101))
 else:
     sock.connect((host,port_number))
 
