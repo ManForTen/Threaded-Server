@@ -2,7 +2,6 @@ import socket
 import threading
 
 f = open('log.txt', 'w')
-breaker = 0
 class ClientThreading(threading.Thread):
     def __init__(self, addr, conn):
         threading.Thread.__init__(self)
@@ -32,7 +31,7 @@ class ClientThreading(threading.Thread):
 
 
 ip = "localhost"
-port = 9101
+port = 9131
 TYPE = socket.AF_INET
 PROTOCOL = socket.SOCK_STREAM
 sock = socket.socket(TYPE,PROTOCOL)
@@ -44,3 +43,5 @@ while True:
     conn, addr = sock.accept()
     thread = ClientThreading(addr[0], conn)
     thread.start()
+
+
